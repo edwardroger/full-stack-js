@@ -3,10 +3,11 @@ var app = express();
 var cors = require('cors')
 
 const userRoute = require('./routes/user.Routes');
+app.use(cors({
+  origin: '*'
+}))
+app.use('/api/v1/user', userRoute);
 
-app.use('/user', userRoute);
-
-app.use(cors())
- app.listen(8080, function () {
+app.listen(8080, function () {
   console.log('CORS-enabled web server listening on port 8080')
 })
