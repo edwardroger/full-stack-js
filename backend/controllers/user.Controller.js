@@ -1,15 +1,13 @@
 const con = require('../database/connection')
+const User = require('../models/user.Model')
 
-const getUser = (req, res) => {
-    let query = "SELECT * FROM users";
-    con.query(query, (err, result) => {
-        if (err) throw err
+const getUser = async (req, res) => {
+    let users = await User.findAll({limit: 5});
 
-        return res.status(200).json({
-            users: result,
-            err: 0,
-            msg: "Get users successfully" 
-        })
+    return res.status(200).json({
+        users: users,
+        err: 0,
+        msg: "Get users successfully" 
     })
 };
 
