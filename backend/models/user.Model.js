@@ -35,20 +35,20 @@ sequelize.sync().then(() => {
 
 module.exports = User;
 
-// sequelize.sync().then(() => {
-//     console.log('create user');
+sequelize.sync().then(() => {
+    console.log('create user');
 
-//     User.create({
-//         name: 'John1',
-//         email: 'john1@example.com',
-//         password: 'password',
-//         age: 21,
-//         address: '123'
-//     }).then(res => {
-//         console.log('User inserted successfully');
-//     }).catch((err) => {
-//         console.log('fail: ' + err);
-//     });
-// }).catch((err) => {
-//     console.log('fail: ' + err);
-// });
+    User.create({
+        name: 'Nguyen Van A',
+        email: 'test@gmail.com',
+        password: '123456789',
+        age: 21,
+        address: '123'
+    }).then(res => {
+        console.log('User inserted successfully');
+    }).catch((err) => {
+        console.log('fail: ' + err);
+    });
+}).catch((err) => {
+    console.log('fail: ' + err);
+});
