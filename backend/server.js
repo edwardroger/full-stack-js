@@ -12,7 +12,7 @@ app.use(cors({
 }))
 app.use(express.json());
 app.use('/api/v1/user', urlencodeParser, userRoute);
-app.use('/api/v1/auth', authRoute)
+app.use('/api/v1/auth', urlencodeParser, authRoute)
 
 app.listen(8080, function () {
   console.log('CORS-enabled web server listening on port 8080')

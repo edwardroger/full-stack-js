@@ -1,0 +1,97 @@
+//// Các kiểu dữ liệu với Sequelize
+Sequelize.STRING                      // VARCHAR(255)
+Sequelize.STRING(1234)                // VARCHAR(1234)
+Sequelize.STRING.BINARY               // VARCHAR BINARY
+Sequelize.TEXT                        // TEXT
+
+Sequelize.INTEGER                     // INTEGER
+Sequelize.BIGINT                      // BIGINT
+Sequelize.BIGINT(11)                  // BIGINT(11)
+
+Sequelize.FLOAT                       // FLOAT
+Sequelize.FLOAT(11)                   // FLOAT(11)
+Sequelize.FLOAT(11, 12)               // FLOAT(11,12)
+
+Sequelize.REAL                        // REAL        Chỉ hỗ trợ PostgreSQL.
+Sequelize.REAL(11)                    // REAL(11)    Chỉ hỗ trợ PostgreSQL.
+Sequelize.REAL(11, 12)                // REAL(11,12) Chỉ hỗ trợ PostgreSQL.
+
+Sequelize.DOUBLE                      // DOUBLE
+Sequelize.DOUBLE(11)                  // DOUBLE(11)
+Sequelize.DOUBLE(11, 12)              // DOUBLE(11,12)
+
+Sequelize.DECIMAL                     // DECIMAL
+Sequelize.DECIMAL(10, 2)              // DECIMAL(10,2)
+
+Sequelize.DATE                        // DATETIME for mysql / sqlite, TIMESTAMP WITH TIME ZONE for postgres
+Sequelize.BOOLEAN                     // TINYINT(1)
+
+Sequelize.ENUM('value 1', 'value 2')
+Sequelize.ARRAY(Sequelize.TEXT)       // Chỉ hỗ trợ PostgreSQL.
+
+Sequelize.JSON                        // JSON column. Chỉ hỗ trợ PostgreSQL.
+Sequelize.JSONB                       // JSONB column. Chỉ hỗ trợ PostgreSQL.
+
+
+//// Tìm kiếm
+
+// Tìm kiếm theo Id
+var task = Task.findById(123);
+
+// Tìm kiếm theo attributes
+var task = Task.findOne({ where: {title: 'aTask'} }).then(function(task) {
+})
+
+var task = Task.findOne({
+    where: {title: 'aProject'},
+    attributes: ['id', ['title', 'rating']]
+}).then(function(task) {
+})
+
+// Tìm kiếm nhiều bản ghi
+var task = Task.findAll().then(function(tasks) {
+})
+
+// Giới hạn số lượng kết quả của query
+var task = Task.findAll({ limit: 10 })
+
+// Bỏ qua 10 kết quả đầu tiên
+var task = Task.findAll({ offset: 10 })
+
+//Đếm số lượng result
+var task = Task.count().then(function(c) {
+    console.log("There are " + c + " tasks!")
+})
+
+// Thêm, Sửa, Xóa
+
+// Thêm mới
+// 1. Tạo một thể hiện của model (chưa được lưu vào database)
+var task = Task.build({
+    title: 'specify the project idea',
+    rating: 2
+})
+
+task.title  // ==> 'specify the project idea'
+task.rating // ==> 2
+
+// Để lưu vào database chúng ta sử dụng function save
+task.save()
+
+// 2.Tạo bản ghi trong database
+Task.create({ title: 'foo', rating: 5});
+
+// Sửa
+// Có 2 cách để để cập nhật dữ liệu
+// Cách 1:
+task.title = 'a very different title now'
+task.save().then(function() {})
+
+// Cách 2
+task.update({
+    title: 'a very different title now'
+}).then(function() {})
+
+// Xóa
+task.destroy({ force: true })
+

@@ -1,3 +1,4 @@
+const UserService = require('../services/user.Service');
 const con = require('../database/connection')
 const User = require('../models/user.Model')
 
@@ -15,7 +16,9 @@ const getUserDetail = (req, res) => {
     res.send(JSON.parse('{"message": "user detail!"}'));
 };
 
-const createUser = (req, res) => {
+const createUser = async (req, res) => {
+    let createdAt = new Date();
+    let updatedAt = new Date();
     let newUser = {
         name: req.body.name,
         email: req.body.email,
@@ -23,12 +26,14 @@ const createUser = (req, res) => {
         age: req.body.age,
         address: req.body.address
     }
+    let hashPassword = await UserService.hashPassword(newUser.password)
+
     let query = `INSERT INTO  users
         (name, email, password, age, address)
         VALUES 
-        ('${newUser.name}', '${newUser.email}', '${newUser.password}', '${newUser.age}', '${newUser.address}')`;
+        ('${newUser.name}', '${newUser.email}', '${hashPassword}', '${newUser.age}', '${newUser.address}')`;
 
-    con.query(query, (err, results) => {
+    await con.query(query, (err, results) => {
         if (err) {
             return res.status(404).json({
                 err: 1,
@@ -43,8 +48,6 @@ const createUser = (req, res) => {
         })
     });
 };
-
-// BTVN: - Đăng ký đăng nhập
 
 module.exports = {
     getUser: getUser,

@@ -25,7 +25,7 @@ const User = sequelize.define('users', {
     // timestamps: false // 2 trường createdAt và updatedAt
     // paranoid: true, // trường deletedAt (Soft delete)
     // underscored: true //chuyển createdAt và updatedAt => created_at và updated_at
-});
+}, {timestamps: false});
 
 sequelize.sync().then(() => {
     console.log('User table created successfully');
@@ -35,20 +35,20 @@ sequelize.sync().then(() => {
 
 module.exports = User;
 
-sequelize.sync().then(() => {
-    console.log('create user');
+// sequelize.sync().then(() => {
+//     console.log('create user');
 
-    User.create({
-        name: 'Nguyen Van A',
-        email: 'test@gmail.com',
-        password: '123456789',
-        age: 21,
-        address: '123'
-    }).then(res => {
-        console.log('User inserted successfully');
-    }).catch((err) => {
-        console.log('fail: ' + err);
-    });
-}).catch((err) => {
-    console.log('fail: ' + err);
-});
+//     User.create({
+//         name: 'Nguyen Van A',
+//         email: 'test@gmail.com',
+//         password: '123456789',
+//         age: 21,
+//         address: '123'
+//     }).then(res => {
+//         console.log('User inserted successfully');
+//     }).catch((err) => {
+//         console.log('fail: ' + err);
+//     });
+// }).catch((err) => {
+//     console.log('fail: ' + err);
+// });
