@@ -1,10 +1,12 @@
 const User = require('../models/user.Model')
 const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
+const { generateToken } = require('../services/auth.Service');
+require('dotenv').config();
 
 const login = async (req, res) => {
     let email = req.body.email ?? '';
     let password = req.body.password ?? '';
-    console.log(req.body);
     let msg = [];
     var regex = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
     if (!email || !password) {
@@ -31,8 +33,10 @@ const login = async (req, res) => {
     if (user !== null) {
         let check = await bcrypt.compareSync(password, user.password);
         if (check) {
+            const tokens = generateToken({ email, password });
+
             return res.status(200).json({
-                user: user,
+                data: tokens,
                 message: 'Login successful',
                 err: 0,
             });
