@@ -48,7 +48,10 @@ const login = async (req, res) => {
         err: 1,
     })
 }
-//BT: sử dụng mã hoá password để làm chức năng đăng nhập. Kèm ReactJS
+//BT: Tạo ra 3 pages:
+//Page 1: /login => trả accessToken nếu như đăng nhập thành công
+//Page 2: /home => Trả về màn hình home nếu như chưa đăng nhập (Không cần xác thực jwt)
+//Page 3: /user => Show thông tin của user đang đăng nhập (Cần xác thực jwt)
 module.exports = {
     login: login,
 }
